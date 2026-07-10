@@ -12,7 +12,7 @@ public record ViaggioRequestDTO(
         @Pattern(regexp = "^[a-zA-Z\\sàèìòùòóÁÉÍÓÚçÇñÑ'-]+$", message = "La destinazione non può contenere numeri o " +
                 "caratteri speciali")
         String destinazione,
-        @NotBlank(message = "Il campo non può essere vuoto")
+        @NotNull(message = "Il campo non può essere vuoto")
         @FutureOrPresent(message = "La data non potrà essere passata ma solo presente o futura")
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate data) {

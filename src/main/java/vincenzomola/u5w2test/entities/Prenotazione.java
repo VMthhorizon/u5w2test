@@ -26,11 +26,19 @@ public class Prenotazione {
     protected Prenotazione() {
     }
 
-    public Prenotazione(LocalDate dataRichiesta, String note, Viaggio viaggio, Dipendente dipendente) {
-        this.dataRichiesta = dataRichiesta;
+    public Prenotazione(String note, Viaggio viaggio, Dipendente dipendente) {
+        this.dataRichiesta = LocalDate.now();
         this.note = note;
         this.viaggio = viaggio;
         this.dipendente = dipendente;
+    }
+
+    public Dipendente getDipendente() {
+        return dipendente;
+    }
+
+    public Viaggio getViaggio() {
+        return viaggio;
     }
 
     @Override

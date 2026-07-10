@@ -30,6 +30,20 @@ public class Dipendente {
         this.avatar = "https://ui-avatars.com/api/?name=John+Doe";
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    get
+
     @Override
     public String toString() {
         return "Dipendente{" +

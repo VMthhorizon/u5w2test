@@ -29,6 +29,18 @@ public class Viaggio {
         this.stato = StatoViaggio.IN_PROGRAMMA;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public StatoViaggio getStato() {
+        return stato;
+    }
+
     public void setStato(StatoViaggio stato) {
         this.stato = stato;
     }
