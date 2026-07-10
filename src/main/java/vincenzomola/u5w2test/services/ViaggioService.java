@@ -57,7 +57,7 @@ public class ViaggioService {
     }
 
     public void deleteById(UUID id) {
-        Viaggio viaggio = this.findById(id);
-        this.viaggioRepository.deleteById(id);
+        Viaggio ById = this.findById(id);
+        this.viaggioRepository.delete(ById);
     }
 }

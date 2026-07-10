@@ -41,9 +41,7 @@ public class Dipendente {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
-    get
-
+    
     @Override
     public String toString() {
         return "Dipendente{" +

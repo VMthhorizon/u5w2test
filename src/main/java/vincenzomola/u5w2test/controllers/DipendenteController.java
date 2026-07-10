@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import vincenzomola.u5w2test.entities.Dipendente;
 import vincenzomola.u5w2test.entities.Viaggio;
 import vincenzomola.u5w2test.exceptions.ValidationException;
@@ -56,25 +57,11 @@ public class DipendenteController {
         return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername());
     }
 
-    //
-//    @PatchMapping("/{viaggioId}/stato")
-//    public ViaggioStatoResponseDTO findAndUpdateStatoById(@PathVariable UUID viaggioId,
-//                                                          @RequestBody @Validated ViaggioStatoRequestDTO body,
-//                                                          BindingResult validationResult) {
-//        if (validationResult.hasErrors()) {
-//            validationResult.getFieldErrors()
-//                    .forEach(fieldError -> System.out.println(fieldError.getDefaultMessage()));
-//
-//            List<String> errorsList = validationResult.getFieldErrors()
-//                    .stream()
-//                    .map(fieldError -> fieldError.getDefaultMessage())
-//                    .toList();
-//            throw new ValidationException(errorsList);
-//        }
-//        Viaggio viaggio = this.viaggioService.findAndUpdateStatoById(viaggioId, body.statoViaggio());
-//        return new ViaggioStatoResponseDTO(viaggio.getId(), viaggio.getStato());
-//    }
-//
+    @PatchMapping("/{dipendenteId}/avatar")
+    public void updateAvatar(@PathVariable UUID dipendenteId, @RequestParam("avatar_pic") MultipartFile file) {
+        this.dipendenteService.updateAvatar(dipendenteId, file);
+    }
+
     @DeleteMapping("/{dipendenteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable UUID dipendenteId) {

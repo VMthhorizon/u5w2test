@@ -41,6 +41,10 @@ public class Prenotazione {
         return viaggio;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Prenotazione{" +

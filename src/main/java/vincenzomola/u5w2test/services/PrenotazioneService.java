@@ -1,5 +1,8 @@
 package vincenzomola.u5w2test.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vincenzomola.u5w2test.entities.Dipendente;
 import vincenzomola.u5w2test.entities.Prenotazione;
@@ -41,5 +44,23 @@ public class PrenotazioneService {
 
         Prenotazione prenotazione = new Prenotazione(payload.note(), viaggio, dipendente);
         return this.prenotazioneRepository.save(prenotazione);
+    }
+
+    public Page<Prenotazione> getAll(int page, int size) {
+        if (page < 0) page = 0;
+        if (size > 15) size = 15;
+        if (size < 0) size = 1;
+        Pageable pageable = PageRequest.of(page, size);
+        return this.prenotazioneRepository.findAll(pageable);
+    }
+
+    public Prenotazione findById(UUID id) {
+        return this.prenotazioneRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id));
+    }
+
+    public void delete(UUID id) {
+        Prenotazione prenotazione = this.findById(id);
+        this.prenotazioneRepository.delete(prenotazione);
     }
 }
