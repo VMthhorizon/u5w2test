@@ -1,0 +1,44 @@
+package vincenzomola.u5w2test.entities;
+
+import jakarta.persistence.*;
+
+import java.util.UUID;
+
+@Entity
+@Table(name = "Dipendenti")
+public class Dipendente {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id_dipendente")
+    private UUID id;
+    private String username;
+    private String nome;
+    private String cognome;
+    private String email;
+    @Column(name = "avatar_pic")
+    private String avatar;
+
+    protected Dipendente() {
+    }
+
+    public Dipendente(String username, String nome, String cognome, String email) {
+        this.username = username;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.email = email;
+        this.avatar = "https://ui-avatars.com/api/?name=John+Doe";
+    }
+
+    @Override
+    public String toString() {
+        return "Dipendente{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
+    }
+}
