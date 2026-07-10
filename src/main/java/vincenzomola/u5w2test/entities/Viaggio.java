@@ -17,14 +17,19 @@ public class Viaggio {
     private String destinazione;
     private LocalDate data;
     @Column(name = "stato_viaggio")
+    @Enumerated(EnumType.STRING)
     private StatoViaggio stato;
 
     protected Viaggio() {
     }
 
-    public Viaggio(String destinazione, LocalDate data, StatoViaggio stato) {
+    public Viaggio(String destinazione, LocalDate data) {
         this.destinazione = destinazione;
         this.data = data;
+        this.stato = StatoViaggio.IN_PROGRAMMA;
+    }
+
+    public void setStato(StatoViaggio stato) {
         this.stato = stato;
     }
 
