@@ -10,5 +10,5 @@ public class U5w2testApplication {
         SpringApplication.run(U5w2testApplication.class, args);
     }
 
-	
+
 }
