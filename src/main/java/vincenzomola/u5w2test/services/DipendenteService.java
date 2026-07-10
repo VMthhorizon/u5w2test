@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import vincenzomola.u5w2test.entities.Dipendente;
-import vincenzomola.u5w2test.entities.Viaggio;
 import vincenzomola.u5w2test.exceptions.BadRequestException;
 import vincenzomola.u5w2test.exceptions.NotFoundException;
 import vincenzomola.u5w2test.payloads.DipendenteRequestDTO;
