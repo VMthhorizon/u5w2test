@@ -16,17 +16,19 @@ public class Dipendente {
     private String nome;
     private String cognome;
     private String email;
+    private String password;
     @Column(name = "avatar_pic")
     private String avatar;
 
     protected Dipendente() {
     }
 
-    public Dipendente(String username, String nome, String cognome, String email) {
+    public Dipendente(String username, String nome, String cognome, String email, String password) {
         this.username = username;
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+        this.password = password;
         this.avatar = "https://ui-avatars.com/api/?name=John+Doe";
     }
 
@@ -41,7 +43,11 @@ public class Dipendente {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
     @Override
     public String toString() {
         return "Dipendente{" +
@@ -50,6 +56,7 @@ public class Dipendente {
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 '}';
     }

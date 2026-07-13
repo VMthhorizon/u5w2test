@@ -42,19 +42,19 @@ public class DipendenteController {
         }
 
         Dipendente dipendente = this.dipendenteService.saveDipendente(body);
-        return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername());
+        return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername(), dipendente.getPassword());
     }
 
     @GetMapping
     public Page<Dipendente> getAll(@RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "5") int size) {
+                                   @RequestParam(defaultValue = "100") int size) {
         return this.dipendenteService.getAll(page, size);
     }
 
     @GetMapping("/{dipendenteId}")
     public DipendenteResponseDTO findById(@PathVariable UUID dipendenteId) {
         Dipendente dipendente = this.dipendenteService.findById(dipendenteId);
-        return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername());
+        return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername(), dipendente.getPassword());
     }
 
     @PatchMapping("/{dipendenteId}/avatar")

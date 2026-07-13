@@ -22,5 +22,6 @@ public record DipendenteRequestDTO(
         @NotBlank(message = "Il campo non può essere vuoto")
         @Size(min = 2, max = 50, message = "La mail deve avere tra 2 e 50 caratteri")
         @Email(message = "Formato per la mail non valido")
-        String email) {
+        String email,
+        String password) {
 }

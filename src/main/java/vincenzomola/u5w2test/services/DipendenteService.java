@@ -31,13 +31,14 @@ public class DipendenteService {
     }
 
     public Dipendente saveDipendente(DipendenteRequestDTO payload) {
-        Dipendente dipendente = new Dipendente(payload.username(), payload.nome(), payload.cognome(), payload.email());
+        Dipendente dipendente = new Dipendente(payload.username(), payload.nome(), payload.cognome(), payload.email(),
+                payload.password());
         return this.dipendenteRepository.save(dipendente);
     }
 
     public Page<Dipendente> getAll(int page, int size) {
         if (page < 0) page = 0;
-        if (size > 15) size = 15;
+        if (size >= 0) size = 100;
         if (size < 0) size = 1;
         Pageable pageable = PageRequest.of(page, size);
         return this.dipendenteRepository.findAll(pageable);
@@ -67,6 +68,11 @@ public class DipendenteService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public Dipendente findByEmail(String email) {
+        return this.dipendenteRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Dipendente con questa email non trovato"));
     }
 
     public void deleteById(UUID id) {
