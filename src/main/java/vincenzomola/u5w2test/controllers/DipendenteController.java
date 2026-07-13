@@ -26,25 +26,6 @@ public class DipendenteController {
         this.dipendenteService = dipendenteService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public DipendenteResponseDTO createDipendente(@RequestBody @Validated DipendenteRequestDTO body,
-                                                  BindingResult validationResult) {
-        if (validationResult.hasErrors()) {
-            validationResult.getFieldErrors()
-                    .forEach(fieldError -> System.out.println(fieldError.getDefaultMessage()));
-
-            List<String> errorsList = validationResult.getFieldErrors()
-                    .stream()
-                    .map(fieldError -> fieldError.getDefaultMessage())
-                    .toList();
-            throw new ValidationException(errorsList);
-        }
-
-        Dipendente dipendente = this.dipendenteService.saveDipendente(body);
-        return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername(), dipendente.getPassword());
-    }
-
     @GetMapping
     public Page<Dipendente> getAll(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "100") int size) {
