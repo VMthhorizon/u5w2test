@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
+import vincenzomola.u5w2test.exceptions.UnauthorizedException;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class TokenFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer "))
-            throw new UnavailableException("Inserire il token nell'header");
+            throw new UnauthorizedException("Inserire il token nell'header");
 
         String accessToken = authHeader.replace("Bearer ", "");
 
