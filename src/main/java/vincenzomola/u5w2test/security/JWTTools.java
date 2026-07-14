@@ -8,6 +8,7 @@ import vincenzomola.u5w2test.entities.Dipendente;
 import vincenzomola.u5w2test.exceptions.UnauthorizedException;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JWTTools {
@@ -38,7 +39,15 @@ public class JWTTools {
         } catch (Exception ex) {
             throw new UnauthorizedException("Ci sono stati problemi con il token! Rieffettuare login!");
         }
+    }
 
+    public UUID extractIdFromToken(String token) {
+        return UUID.fromString(Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject());
     }
 
 }

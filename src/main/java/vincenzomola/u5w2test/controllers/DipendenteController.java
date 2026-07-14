@@ -2,6 +2,7 @@ package vincenzomola.u5w2test.controllers;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class DipendenteController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Page<Dipendente> getAll(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "100") int size) {
         return this.dipendenteService.getAll(page, size);
@@ -42,6 +44,13 @@ public class DipendenteController {
     public void updateAvatar(@PathVariable UUID dipendenteId, @RequestParam("avatar_pic") MultipartFile file) {
         this.dipendenteService.updateAvatar(dipendenteId, file);
     }
+
+//    @PatchMapping("/{dipendenteId}/role")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
+//    public void updateRole(@PathVariable UUID dipendenteId, @RequestBody DipendenteRequestDTO body,
+//                           BindingResult validationResult) {
+//        this.dipendenteService.updateRole(dipendenteId, body);
+//    }
 
     @DeleteMapping("/{dipendenteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

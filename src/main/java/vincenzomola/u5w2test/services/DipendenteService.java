@@ -75,6 +75,14 @@ public class DipendenteService {
                 .orElseThrow(() -> new NotFoundException("Dipendente con questa email non trovato"));
     }
 
+//    public void updateRole(UUID id, DipendenteRequestDTO body) {
+//        Dipendente dipendenteFromdb = this.dipendenteRepository.findById(id)
+//                .orElseThrow(() -> new NotFoundException("Dipendente con questo id non trovato"));
+//
+//        dipendenteFromdb.setRole(body.role());
+//        this.dipendenteRepository.save(dipendenteFromdb);
+//    }
+
     public void deleteById(UUID id) {
         Dipendente dipendente = this.findById(id);
         this.dipendenteRepository.deleteById(id);

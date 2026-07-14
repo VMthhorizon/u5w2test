@@ -1,12 +1,18 @@
 package vincenzomola.u5w2test.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import vincenzomola.u5w2test.enums.Role;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "Dipendenti")
-public class Dipendente {
+public class Dipendente implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -19,6 +25,8 @@ public class Dipendente {
     private String password;
     @Column(name = "avatar_pic")
     private String avatar;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     protected Dipendente() {
     }
@@ -30,6 +38,7 @@ public class Dipendente {
         this.email = email;
         this.password = password;
         this.avatar = "https://ui-avatars.com/api/?name=John+Doe";
+        this.role = Role.USER;
     }
 
     public UUID getId() {
@@ -42,6 +51,11 @@ public class Dipendente {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(this.role.name()));
     }
 
     public String getPassword() {

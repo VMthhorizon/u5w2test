@@ -5,20 +5,30 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.UnavailableException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
+import vincenzomola.u5w2test.entities.Dipendente;
 import vincenzomola.u5w2test.exceptions.UnauthorizedException;
+import vincenzomola.u5w2test.services.DipendenteService;
 
 import java.io.IOException;
+import java.net.Authenticator;
+import java.util.UUID;
 
 @Component
 public class TokenFilter extends OncePerRequestFilter {
 
     private final JWTTools jwtTools;
+    private final DipendenteService dipendenteService;
 
-    public TokenFilter(JWTTools jwtTools) {
+    public TokenFilter(JWTTools jwtTools, DipendenteService dipendenteService) {
         this.jwtTools = jwtTools;
+        this.dipendenteService = dipendenteService;
     }
 
     @Override
@@ -34,6 +44,15 @@ public class TokenFilter extends OncePerRequestFilter {
         String accessToken = authHeader.replace("Bearer ", "");
 
         this.jwtTools.verifyToken(accessToken);
+
+        UUID dipendenteId = jwtTools.extractIdFromToken(accessToken);
+        Dipendente autenticato = this.dipendenteService.findById(dipendenteId);
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                autenticato, null,
+                autenticato.getAuthorities());
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }

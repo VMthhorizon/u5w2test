@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import vincenzomola.u5w2test.enums.Role;
 
 public record DipendenteRequestDTO(
         @NotBlank(message = "Il campo non può essere vuoto")
@@ -23,5 +24,6 @@ public record DipendenteRequestDTO(
         @Size(min = 2, max = 50, message = "La mail deve avere tra 2 e 50 caratteri")
         @Email(message = "Formato per la mail non valido")
         String email,
-        String password) {
+        String password,
+        Role role) {
 }
