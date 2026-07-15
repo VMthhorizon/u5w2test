@@ -3,6 +3,7 @@ package vincenzomola.u5w2test.controllers;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,6 @@ import vincenzomola.u5w2test.payloads.*;
 import vincenzomola.u5w2test.services.DipendenteService;
 import vincenzomola.u5w2test.services.ViaggioService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,9 +34,8 @@ public class DipendenteController {
         return this.dipendenteService.getAll(page, size);
     }
 
-    @GetMapping("/{dipendenteId}")
-    public DipendenteResponseDTO findById(@PathVariable UUID dipendenteId) {
-        Dipendente dipendente = this.dipendenteService.findById(dipendenteId);
+    @GetMapping("/me")
+    public DipendenteResponseDTO myProfile(@AuthenticationPrincipal Dipendente dipendente) {
         return new DipendenteResponseDTO(dipendente.getId(), dipendente.getUsername(), dipendente.getPassword());
     }
 
@@ -45,12 +44,12 @@ public class DipendenteController {
         this.dipendenteService.updateAvatar(dipendenteId, file);
     }
 
-//    @PatchMapping("/{dipendenteId}/role")
-//    @PreAuthorize("hasAnyAuthority('ADMIN')")
-//    public void updateRole(@PathVariable UUID dipendenteId, @RequestBody DipendenteRequestDTO body,
-//                           BindingResult validationResult) {
-//        this.dipendenteService.updateRole(dipendenteId, body);
-//    }
+    @PatchMapping("/{dipendenteId}/role")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public void updateRole(@PathVariable UUID dipendenteId, @RequestBody DipendenteRequestDTO body,
+                           BindingResult validationResult) {
+        this.dipendenteService.updateRole(dipendenteId, body);
+    }
 
     @DeleteMapping("/{dipendenteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

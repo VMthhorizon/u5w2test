@@ -1,5 +1,6 @@
 package vincenzomola.u5w2test.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@JsonIgnoreProperties({"cognome", "password", "accountNonExpired", "accountNonLocked", "credentialsNonExpired",
+        "enabled"})
 @Table(name = "Dipendenti")
 public class Dipendente implements UserDetails {
 
@@ -60,6 +63,10 @@ public class Dipendente implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

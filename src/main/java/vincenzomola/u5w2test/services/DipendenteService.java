@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import vincenzomola.u5w2test.entities.Dipendente;
@@ -23,16 +24,19 @@ public class DipendenteService {
 
     private final DipendenteRepository dipendenteRepository;
     private final Cloudinary fileUploader;
+    private final PasswordEncoder bcrypt;
 
 
-    public DipendenteService(DipendenteRepository dipendenteRepository, Cloudinary fileUploader) {
+    public DipendenteService(DipendenteRepository dipendenteRepository, Cloudinary fileUploader,
+                             PasswordEncoder bcrypt) {
         this.dipendenteRepository = dipendenteRepository;
         this.fileUploader = fileUploader;
+        this.bcrypt = bcrypt;
     }
 
     public Dipendente saveDipendente(DipendenteRequestDTO payload) {
         Dipendente dipendente = new Dipendente(payload.username(), payload.nome(), payload.cognome(), payload.email(),
-                payload.password());
+                this.bcrypt.encode(payload.password()));
         return this.dipendenteRepository.save(dipendente);
     }
 
@@ -75,13 +79,13 @@ public class DipendenteService {
                 .orElseThrow(() -> new NotFoundException("Dipendente con questa email non trovato"));
     }
 
-//    public void updateRole(UUID id, DipendenteRequestDTO body) {
-//        Dipendente dipendenteFromdb = this.dipendenteRepository.findById(id)
-//                .orElseThrow(() -> new NotFoundException("Dipendente con questo id non trovato"));
-//
-//        dipendenteFromdb.setRole(body.role());
-//        this.dipendenteRepository.save(dipendenteFromdb);
-//    }
+    public void updateRole(UUID id, DipendenteRequestDTO body) {
+        Dipendente dipendenteFromdb = this.dipendenteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Dipendente con questo id non trovato"));
+
+        dipendenteFromdb.setRole(body.role());
+        this.dipendenteRepository.save(dipendenteFromdb);
+    }
 
     public void deleteById(UUID id) {
         Dipendente dipendente = this.findById(id);
